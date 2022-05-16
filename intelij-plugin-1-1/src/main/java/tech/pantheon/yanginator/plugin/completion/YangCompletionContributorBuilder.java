@@ -84,6 +84,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     }
 
 
+
     @NotNull
     private IElementType getYangKeyword(List<String> currentIdentifiers) {
         IElementType yangKeyword;
@@ -112,7 +113,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         psiElements.stream()
                 .filter(e -> isElementYangType(e, YangTypes.YANG_PREFIX_KEYWORD))
                 .forEach(psiElement -> values.put(getPrefixKeyword(psiElement), getImportKeyword(psiElement)));
-        values.keySet().removeIf(e -> e.length() < 2);
+                values.keySet().removeIf(e -> e.length() < 2);
     }
 
     private String getPrefixKeyword(PsiElement e) {
