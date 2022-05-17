@@ -332,12 +332,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return false;
     }
 
-    private PsiElement nonNullElementAt(int offset , PsiElement e) {
-        var prev = e.findElementAt(offset - 1);
-        if(prev != null )
-        {
-            return  this.psiNode.findElementAt(offset) == null ? null : this.psiNode.findElementAt(offset - 1);
-        }
+    private PsiElement nonNullElementAt(int offset) {
         return this.psiNode.findElementAt(offset) == null ? null : this.psiNode.findElementAt(offset);
     }
 
