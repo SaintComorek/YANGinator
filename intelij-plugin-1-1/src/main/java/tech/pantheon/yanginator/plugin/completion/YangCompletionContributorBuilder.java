@@ -73,8 +73,7 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return new FoldingDescriptor[0];
     }
 
-    private void setImportedIdentifiers(List<String> currentIdentifiers, List<String> values) {
-        if (!currentIdentifiers.isEmpty()) {
+    private void setImportedIdentifiers(List<String> currentIdentifiers, List<String> values) {if (!currentIdentifiers.isEmpty()) {
             updateValues(values);
             findChildrenInAnotherFile(createFileName(currentIdentifiers)).stream()
                     .filter(e -> isElementYangType(e, getYangKeyword(currentIdentifiers)))
@@ -333,7 +332,12 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
         return false;
     }
 
-    private PsiElement nonNullElementAt(int offset) {
+    private PsiElement nonNullElementAt(int offset , PsiElement e) {
+        var prev = e.findElementAt(offset - 1);
+        if(prev != null )
+        {
+            return  this.psiNode.findElementAt(offset) == null ? null : this.psiNode.findElementAt(offset - 1);
+        }
         return this.psiNode.findElementAt(offset) == null ? null : this.psiNode.findElementAt(offset);
     }
 

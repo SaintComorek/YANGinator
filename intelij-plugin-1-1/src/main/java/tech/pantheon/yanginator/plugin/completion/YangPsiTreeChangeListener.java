@@ -37,8 +37,7 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
     @Nullable
     private PsiElement getPrevPsiElement(@NotNull PsiElement element) {
         PsiElement currentPsiElement = getCurrentPsiElement(element);
-        int elementLength = currentPsiElement == null ? 1 : currentPsiElement.getTextLength();
-        return element.findElementAt(getOffsetOfCaret(element) - elementLength);
+        int elementLength = currentPsiElement == null ? 1 : currentPsiElement.getTextLength();         return element.findElementAt(getOffsetOfCaret(element) - elementLength);
     }
 
     @Nullable
