@@ -40,7 +40,8 @@ public class YangCompletionContributor extends CompletionContributor {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,
                                                @NotNull CompletionResultSet resultSet) {
-                        YANG_STATEMENTS.forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                        YANG_STATEMENTS.forEach(s -> resultSet.withPrefixMatcher(
+                                        String.valueOf(POP_UP.prefixMatcher))
                                 .addElement(LookupElementBuilder.create(s).withTypeText("yang-keyword")));
 
                     }
@@ -50,7 +51,8 @@ public class YangCompletionContributor extends CompletionContributor {
             public void addCompletions(@NotNull CompletionParameters parameters,
                                        @NotNull ProcessingContext context,
                                        @NotNull CompletionResultSet resultSet) {
-                BUILT_IN_TYPES.forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                BUILT_IN_TYPES.forEach(s -> resultSet.withPrefixMatcher(
+                                String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("built-in-type").bold()));
             }
         });
@@ -59,7 +61,8 @@ public class YangCompletionContributor extends CompletionContributor {
             public void addCompletions(@NotNull CompletionParameters parameters,
                                        @NotNull ProcessingContext context,
                                        @NotNull CompletionResultSet resultSet) {
-                POP_UP.getPrefixToYangModule().keySet().forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                POP_UP.getPrefixToYangModule().keySet().forEach(s -> resultSet.withPrefixMatcher(
+                                String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("prefix").bold()));
             }
         });
@@ -68,7 +71,8 @@ public class YangCompletionContributor extends CompletionContributor {
             public void addCompletions(@NotNull CompletionParameters parameters,
                                        @NotNull ProcessingContext context,
                                        @NotNull CompletionResultSet resultSet) {
-                POP_UP.getCurrentGroupingNames().forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                POP_UP.getCurrentGroupingNames().forEach(s -> resultSet.withPrefixMatcher(
+                                String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("grouping").bold()));
             }
         });
@@ -77,7 +81,8 @@ public class YangCompletionContributor extends CompletionContributor {
             public void addCompletions(@NotNull CompletionParameters parameters,
                                        @NotNull ProcessingContext context,
                                        @NotNull CompletionResultSet resultSet) {
-                POP_UP.getCurrentTypedefNames().forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                POP_UP.getCurrentTypedefNames().forEach(s -> resultSet.withPrefixMatcher(
+                                String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("typedef").bold()));
 
             }
@@ -87,7 +92,8 @@ public class YangCompletionContributor extends CompletionContributor {
             public void addCompletions(@NotNull CompletionParameters parameters,
                                        @NotNull ProcessingContext context,
                                        @NotNull CompletionResultSet resultSet) {
-                POP_UP.getCurrentIdentityNames().forEach(s -> resultSet.withPrefixMatcher(POP_UP.prefixMatcher)
+                POP_UP.getCurrentIdentityNames().forEach(s -> resultSet.withPrefixMatcher(
+                                String.valueOf(POP_UP.prefixMatcher))
                         .addElement(LookupElementBuilder.create(s).withTypeText("identity").bold()));
             }
         });

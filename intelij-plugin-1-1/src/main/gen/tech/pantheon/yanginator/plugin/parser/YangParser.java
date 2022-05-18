@@ -1,12 +1,3 @@
-/*
- * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available
- *   under the
- *   terms of the Eclipse Public License v1.0 which accompanies this
- *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
- */
-
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.parser;
 
@@ -10290,6 +10281,23 @@ public class YangParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "when_stmt_4_1_2_1")) return false;
     reference_stmt(b, l + 1);
     return true;
+  }
+
+  /* ********************************************************** */
+  // ALPHA+
+  public static boolean word(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "word")) return false;
+    if (!nextTokenIs(b, YANG_ALPHA)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, YANG_ALPHA);
+    while (r) {
+      int c = current_position_(b);
+      if (!consumeToken(b, YANG_ALPHA)) break;
+      if (!empty_element_parsed_guard_(b, "word", c)) break;
+    }
+    exit_section_(b, m, YANG_WORD, r);
+    return r;
   }
 
   /* ********************************************************** */

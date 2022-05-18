@@ -1,12 +1,3 @@
-/*
- * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available
- *   under the
- *   terms of the Eclipse Public License v1.0 which accompanies this
- *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
- */
-
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
@@ -1268,6 +1259,10 @@ public class YangVisitor extends PsiElementVisitor {
   }
 
   public void visitWhenStmt(@NotNull YangWhenStmt o) {
+    visitNamedElement(o);
+  }
+
+  public void visitWord(@NotNull YangWord o) {
     visitNamedElement(o);
   }
 

@@ -1,12 +1,3 @@
-/*
- * Copyright (c) 2021 PANTHEON.tech, s.r.o. All rights reserved.
- *
- *   This program and the accompanying materials are made available
- *   under the
- *   terms of the Eclipse Public License v1.0 which accompanies this
- *   distribution,  and is available at http://www.eclipse.org/legal/epl-v1.html
- */
-
 // This is a generated file. Not intended for manual editing.
 package tech.pantheon.yanginator.plugin.psi;
 
@@ -330,6 +321,7 @@ public interface YangTypes {
   IElementType YANG_VALUE_STMT = new YangElementType("YANG_VALUE_STMT");
   IElementType YANG_WHEN_KEYWORD = new YangElementType("YANG_WHEN_KEYWORD");
   IElementType YANG_WHEN_STMT = new YangElementType("YANG_WHEN_STMT");
+  IElementType YANG_WORD = new YangElementType("YANG_WORD");
   IElementType YANG_WSP = new YangElementType("YANG_WSP");
   IElementType YANG_YANG_CHAR = new YangElementType("YANG_YANG_CHAR");
   IElementType YANG_YANG_STMT = new YangElementType("YANG_YANG_STMT");
@@ -1337,6 +1329,9 @@ public interface YangTypes {
       }
       else if (type == YANG_WHEN_STMT) {
         return new YangWhenStmtImpl(node);
+      }
+      else if (type == YANG_WORD) {
+        return new YangWordImpl(node);
       }
       else if (type == YANG_WSP) {
         return new YangWspImpl(node);
