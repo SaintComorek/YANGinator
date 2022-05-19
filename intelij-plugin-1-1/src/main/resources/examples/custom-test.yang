@@ -6,8 +6,9 @@ module "custom-test" {
 
   prefix "oc-vlan";
 
+  listtre leaf-list
 
-
+  
 
   
   

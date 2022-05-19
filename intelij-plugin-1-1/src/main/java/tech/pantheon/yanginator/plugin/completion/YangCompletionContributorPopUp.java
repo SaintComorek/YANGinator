@@ -56,9 +56,10 @@ public class YangCompletionContributorPopUp {
     }
 
     public void setPrefixMatcher(StringBuilder prefixMatcher) {
-        this.prefixMatcher = prefixMatcher;
-        //for (int i = 0 ; i < beforePrefixMatcher.length() ; i++)
-           // listOfChars.add(beforePrefixMatcher.charAt(i));
-
+        this.prefixMatcher = prefixMatcher.reverse();
+    }
+    public StringBuilder getPrefixMatcher()
+    {
+        return this.prefixMatcher;
     }
 }

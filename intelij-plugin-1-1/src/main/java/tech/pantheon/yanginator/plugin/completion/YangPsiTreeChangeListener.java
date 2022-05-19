@@ -23,16 +23,17 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
 
     //sssssss
-    public String tmp = "";
+    public String tmp = "" ;
+    public StringBuilder tmpBuilder = new StringBuilder();
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
         if (event.getFile() == null
                 || event.getFile().getNode() == null
-                || event.getFile().getNode().getPsi() == null){
+                || event.getFile().getNode().getPsi() == null) {
             return;
         }
-
+/*
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
             POP_UP.setPrefixMatcher(prevPsiElement == null
@@ -41,6 +42,44 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                             ? "" + prevPsiElement.getText()
                             : prevPsiElement.getPrevSibling().getText() + prevPsiElement.getText()));
         }
+
+ */
+
+/*
+        PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
+            POP_UP.setPrefixMatcher(prevPsiElement == null
+                    ? new StringBuilder()
+                    : new StringBuilder(prevPsiElement.getPrevSibling() == null
+                            ? "" + prevPsiElement.getText()
+                            : prevPsiElement.getPrevSibling().getPrevSibling() == null
+                                    ? "" + prevPsiElement.getPrevSibling().getText()
+                                    + prevPsiElement.getText()
+                                    : prevPsiElement.getPrevSibling().getPrevSibling().getText()
+                                            + prevPsiElement.getPrevSibling().getText()
+                                            + prevPsiElement.getText()));
+        }
+
+
+*/
+
+
+
+        tmp = "";
+        PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
+                getPrevSiblingsValues(prevPsiElement,event);
+                    POP_UP.setPrefixMatcher(new StringBuilder(tmp));
+                    POP_UP.getPrefixMatcher();
+            System.out.println(tmp.length());
+        }
+
+
+
+
+
+
+/*
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi().getPrevSibling()) == null)  {
                 POP_UP.setPrefixMatcher(prevPsiElement == null
                         ? new StringBuilder()
@@ -53,41 +92,53 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
             }
 
-             */
+ */
 
-        }
-        else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null && prevPsiElement.getPrevSibling() != null  )  {
+        /*
+        else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null
+                && prevPsiElement.getPrevSibling() != null) {
+            POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
+        } else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null
+                && prevPsiElement.getPrevSibling() != null) {
             POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
         }
 
-        else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null && prevPsiElement.getPrevSibling() != null  )  {
-            POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
-        }
-
-
+         */
     }
 
-    public void getPrevSiblingsValues( PsiElement prevPsiElement)
+
+/*
+    public void getPrevSiblingsValues( PsiElement prevPsiElement,@NotNull PsiTreeChangeEvent event)
     {
-        if(prevPsiElement != null)
-        {
-            //prevPsiElement.getPrevSibling().getText();
-            prevPsiElement = prevPsiElement.getPrevSibling();
-            getPrevSiblingsValues(prevPsiElement);
-        }
-        else {
-            if (prevPsiElement.getNextSibling() != null) {
-                fillString(prevPsiElement.getNextSibling());
-                prevPsiElement = prevPsiElement.getNextSibling();
-                getPrevPsiElement(prevPsiElement);
-            }
+               if (prevPsiElement != null)
+               {
+                   tmp += prevPsiElement.getPrevSibling().getText();
+                   prevPsiElement = prevPsiElement.getPrevSibling();
+                   getPrevSiblingsValues(prevPsiElement,event);
+               }
+               else
+                   return;
+                        //  : new StringBuilder(prevPsiElement.getPrevSibling().getText()));
+    }
+
+
+ */
+
+    public void getPrevSiblingsValues(PsiElement prevPsiElement , @NotNull PsiTreeChangeEvent event )
+    {
+
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
+            if (prevPsiElement != null && prevPsiElement.getText() != "\n" && prevPsiElement.getText() != "" && prevPsiElement.getText() != " ") {
+                tmp += prevPsiElement.getText();
+                prevPsiElement = prevPsiElement.getPrevSibling();
+                getPrevSiblingsValues(prevPsiElement,event);
+            } else
+                return;
         }
     }
 
-    public void fillString(PsiElement prevPsiElement)
-    {
-        tmp += prevPsiElement.getText();
-    }
+
+
 
 
 
