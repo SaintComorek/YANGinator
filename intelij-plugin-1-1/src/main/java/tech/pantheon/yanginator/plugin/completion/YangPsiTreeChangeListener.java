@@ -32,13 +32,20 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                 || event.getFile().getNode().getPsi() == null){
             return;
         }
+
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
-        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null)  {
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
             POP_UP.setPrefixMatcher(prevPsiElement == null
                     ? new StringBuilder()
-                    : new StringBuilder (prevPsiElement.getPrevSibling() == null
-                                                        ? ""  + prevPsiElement.getText()
-                                                        : prevPsiElement.getPrevSibling().getText()  + prevPsiElement.getText()));
+                    : new StringBuilder(prevPsiElement.getPrevSibling() == null
+                            ? "" + prevPsiElement.getText()
+                            : prevPsiElement.getPrevSibling().getText() + prevPsiElement.getText()));
+        }
+        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi().getPrevSibling()) == null)  {
+                POP_UP.setPrefixMatcher(prevPsiElement == null
+                        ? new StringBuilder()
+                      //  : new StringBuilder(prevPsiElement.getPrevSibling().getText()));
+                        : new StringBuilder(prevPsiElement.getText()));
             /*if (prevPsiElement.getPrevSibling() != null )
             {
              POP_UP.prefixMatcher.setCharAt(0 , prevPsiElement.getPrevSibling().getText().charAt(0));
@@ -47,6 +54,7 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
             }
 
              */
+
         }
         else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null && prevPsiElement.getPrevSibling() != null  )  {
             POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
@@ -55,7 +63,6 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
         else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null && prevPsiElement.getPrevSibling() != null  )  {
             POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
         }
-
 
 
     }
