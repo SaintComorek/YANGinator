@@ -70,8 +70,10 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
                 getPrevSiblingsValues(prevPsiElement,event);
                     POP_UP.setPrefixMatcher(new StringBuilder(tmp));
-                    POP_UP.getPrefixMatcher();
+                    //POP_UP.getPrefixMatcher();
             System.out.println(tmp.length());
+            System.out.println(POP_UP.getPrefixMatcher());
+
         }
 
 
@@ -126,9 +128,8 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
     public void getPrevSiblingsValues(PsiElement prevPsiElement , @NotNull PsiTreeChangeEvent event )
     {
-
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-            if (prevPsiElement != null && prevPsiElement.getText() != "\n" && prevPsiElement.getText() != "" && prevPsiElement.getText() != " ") {
+            if (prevPsiElement != null && prevPsiElement.getText() != "\n"  && prevPsiElement.getText() != " ") {
                 tmp += prevPsiElement.getText();
                 prevPsiElement = prevPsiElement.getPrevSibling();
                 getPrevSiblingsValues(prevPsiElement,event);
@@ -137,7 +138,7 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
         }
     }
 
-
+//&& prevPsiElement.getText() != ""
 
 
 
@@ -145,8 +146,8 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
     @Nullable
     private PsiElement getPrevPsiElement(@NotNull PsiElement element) {
         PsiElement currentPsiElement = getCurrentPsiElement(element);
-        int elementLength = currentPsiElement == null ? 0  : currentPsiElement.getTextLength();
-        return element.findElementAt(getOffsetOfCaret(element) - elementLength); // - elementLength);
+        int elementLength = currentPsiElement == null ? 1  : currentPsiElement.getTextLength();
+        return element.findElementAt(getOffsetOfCaret(element) - elementLength ); // - elementLength);
     }
 
     @Nullable
