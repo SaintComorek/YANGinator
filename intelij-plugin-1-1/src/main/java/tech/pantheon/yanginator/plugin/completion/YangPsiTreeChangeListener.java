@@ -9,6 +9,8 @@
 
 package tech.pantheon.yanginator.plugin.completion;
 
+import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
+
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiTreeChangeEvent;
@@ -17,14 +19,9 @@ import com.intellij.psi.util.PsiEditorUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static tech.pantheon.yanginator.plugin.completion.YangCompletionContributorPopUp.POP_UP;
-
 public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
 
-
-    //sssssss
-    public String tmp = "" ;
-    public StringBuilder tmpBuilder = new StringBuilder();
+    private String tmp = "";
 
     @Override
     public void childrenChanged(@NotNull PsiTreeChangeEvent event) {
@@ -40,18 +37,6 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                     ? new StringBuilder()
                     : new StringBuilder(prevPsiElement.getPrevSibling() == null
                             ? "" + prevPsiElement.getText()
-                            : prevPsiElement.getPrevSibling().getText() + prevPsiElement.getText()));
-        }
-
- */
-
-/*
-        PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
-        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-            POP_UP.setPrefixMatcher(prevPsiElement == null
-                    ? new StringBuilder()
-                    : new StringBuilder(prevPsiElement.getPrevSibling() == null
-                            ? "" + prevPsiElement.getText()
                             : prevPsiElement.getPrevSibling().getPrevSibling() == null
                                     ? "" + prevPsiElement.getPrevSibling().getText()
                                     + prevPsiElement.getText()
@@ -59,95 +44,41 @@ public class YangPsiTreeChangeListener implements PsiTreeChangeListener {
                                             + prevPsiElement.getPrevSibling().getText()
                                             + prevPsiElement.getText()));
         }
-
-
 */
 
-
-
-        tmp = "";
+        setDefaultTmpString();
         PsiElement prevPsiElement = getPrevPsiElement(event.getFile().getNode().getPsi());
         if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-                getPrevSiblingsValues(prevPsiElement,event);
-                    POP_UP.setPrefixMatcher(new StringBuilder(tmp));
-                    //POP_UP.getPrefixMatcher();
+            getPrevSiblingsValues(prevPsiElement);
+            POP_UP.setPrefixMatcher(new StringBuilder(tmp));
+            //POP_UP.getPrefixMatcher();
             System.out.println(tmp.length());
             System.out.println(POP_UP.getPrefixMatcher());
 
         }
 
-
-
-
-
-
-/*
-        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi().getPrevSibling()) == null)  {
-                POP_UP.setPrefixMatcher(prevPsiElement == null
-                        ? new StringBuilder()
-                      //  : new StringBuilder(prevPsiElement.getPrevSibling().getText()));
-                        : new StringBuilder(prevPsiElement.getText()));
-            /*if (prevPsiElement.getPrevSibling() != null )
-            {
-             POP_UP.prefixMatcher.setCharAt(0 , prevPsiElement.getPrevSibling().getText().charAt(0));
-             POP_UP.prefixMatcher.setCharAt(1 , prevPsiElement.getNextSibling().getText().charAt(1));
-
-            }
-
- */
-
-        /*
-        else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null
-                && prevPsiElement.getPrevSibling() != null) {
-            POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
-        } else if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) == null
-                && prevPsiElement.getPrevSibling() != null) {
-            POP_UP.setPrefixMatcher(new StringBuilder(prevPsiElement.getPrevSibling().getText()));
-        }
-
-         */
     }
 
-
-/*
-    public void getPrevSiblingsValues( PsiElement prevPsiElement,@NotNull PsiTreeChangeEvent event)
-    {
-               if (prevPsiElement != null)
-               {
-                   tmp += prevPsiElement.getPrevSibling().getText();
-                   prevPsiElement = prevPsiElement.getPrevSibling();
-                   getPrevSiblingsValues(prevPsiElement,event);
-               }
-               else
-                   return;
-                        //  : new StringBuilder(prevPsiElement.getPrevSibling().getText()));
+    private void setDefaultTmpString() {
+        this.tmp = "";
     }
 
+    private void getPrevSiblingsValues(PsiElement prevPsiElement) {
 
- */
-
-    public void getPrevSiblingsValues(PsiElement prevPsiElement , @NotNull PsiTreeChangeEvent event )
-    {
-        if (PsiEditorUtil.findEditor(event.getFile().getNode().getPsi()) != null) {
-            if (prevPsiElement != null && prevPsiElement.getText() != "\n"  && prevPsiElement.getText() != " ") {
-                tmp += prevPsiElement.getText();
-                prevPsiElement = prevPsiElement.getPrevSibling();
-                getPrevSiblingsValues(prevPsiElement,event);
-            } else
-                return;
+        if (prevPsiElement != null && prevPsiElement.getText() != "\n" && prevPsiElement.getText() != " ") {
+            tmp += prevPsiElement.getText();
+            prevPsiElement = prevPsiElement.getPrevSibling();
+            getPrevSiblingsValues(prevPsiElement);
+        } else {
+            return;
         }
     }
-
-//&& prevPsiElement.getText() != ""
-
-
-
 
     @Nullable
     private PsiElement getPrevPsiElement(@NotNull PsiElement element) {
         PsiElement currentPsiElement = getCurrentPsiElement(element);
-        int elementLength = currentPsiElement == null ? 1  : currentPsiElement.getTextLength();
-        return element.findElementAt(getOffsetOfCaret(element) - elementLength ); // - elementLength);
+        int elementLength = currentPsiElement == null ? 1 : currentPsiElement.getTextLength();
+        return element.findElementAt(getOffsetOfCaret(element) - elementLength);
     }
 
     @Nullable

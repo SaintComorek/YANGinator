@@ -166,7 +166,6 @@ public class YangCompletionContributorBuilder implements FoldingBuilder {
     }
 
 
-
     private void createImportIdentifier(StringBuilder prefixIdentifier, PsiElement prevSibling ) {
         if (isNotForbiddenCharacter(prevSibling)) {
             prefixIdentifier.append(new StringBuilder(prevSibling.getText()).reverse());    // sssssssss
